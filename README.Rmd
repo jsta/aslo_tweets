@@ -94,6 +94,8 @@ rt %>%
     subtitle = "Twitter status counts aggregated using two-hour intervals",
     caption = "\n\nSource: Data gathered via Twitter's standard `search/tweets` API using rtweet\n Code provided by Mike Kearney (@kearneymw)",
     x = NULL, y = NULL)
+
+ggsave("tweets.png", dpi = 320, width = 7, height = 5)
 ```
 
 Using the text of the tweets, we can also perform a sentiment analysis.
@@ -138,6 +140,8 @@ rt %>%
     title = "Sentiment (valence) of SER 2018 tweets over time",
     subtitle = "Mean sentiment of tweets aggregated in one-hour intervals",
     caption = "\nSource: Data gathered using rtweet. Sentiment analysis done using syuzhet\n Code provided by Mike Kearney (@kearneymw)")
+
+ggsave("sentiment.png", dpi = 320, width = 7.5)
 ```
 
 Finally, we can plot the network of Twitter users talking about SER. 
@@ -213,4 +217,6 @@ as_tbl_graph(g) %>%
   labs(title = "Connections between Twitter users during SER 2018",
     caption = "\n\nSource: Data gathered via Twitter's standard `search/tweets` API using rtweet\n Code provided by Mike Kearney (@kearneymw)",
     x = NULL, y = NULL)
+
+ggsave("tweet_network.png", dpi = 320, width = 8, height = 6)
 ```

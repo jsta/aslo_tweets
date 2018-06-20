@@ -89,6 +89,11 @@ rt %>%
 
 ![](README_files/figure-gfm/time_series-1.png)<!-- -->
 
+``` r
+
+ggsave("tweets.png", dpi = 320, width = 7, height = 5)
+```
+
 Using the text of the tweets, we can also perform a sentiment analysis.
 
 ``` r
@@ -134,6 +139,12 @@ rt %>%
 ```
 
 ![](README_files/figure-gfm/sentiment-1.png)<!-- -->
+
+``` r
+
+ggsave("sentiment.png", dpi = 320, width = 7.5)
+#> Saving 7.5 x 5 in image
+```
 
 Finally, we can plot the network of Twitter users talking about SER.
 
@@ -216,3 +227,8 @@ as_tbl_graph(g) %>%
 ```
 
 ![](README_files/figure-gfm/network-1.png)<!-- -->
+
+``` r
+
+ggsave("tweet_network.png", dpi = 320, width = 8, height = 6)
+```
