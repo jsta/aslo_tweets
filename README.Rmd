@@ -12,9 +12,9 @@ knitr::opts_chunk$set(
 )
 ```
 
-# SER 2018 tweets
+# ASLO 2018 tweets
 
-This repository contains R code and data for analyzing tweets about SER 2018. The analysis is based around the `rtweet` package, and the code is largely based on work `rtweets` author [Mike Kearney](https://github.com/mkearney) did for other conferences. My thanks to him for letting me use it. 
+This repository contains R code and data for analyzing tweets about ASLO 2018. The analysis is based around the `rtweet` package, and the code is largely based on work `rtweets` author [Mike Kearney](https://github.com/mkearney) did for other conferences. My thanks to him for letting me use it. 
 
 Please feel free to submit PRs.
 
@@ -24,8 +24,7 @@ Load the data using Twitter's search API:
 library(rtweet)
 
 ## search terms
-ser <- c("ser51", "ser2018",
-  "ser18", "societyforepi")
+ser <- c("aslo18", "aslo2018")
 
 ## use since_id from previous search (if exists)
 if (file.exists(file.path("data", "search.rds"))) {
@@ -35,7 +34,7 @@ if (file.exists(file.path("data", "search.rds"))) {
   since_id <- NULL
 }
 
-## search for up to 100,000 tweets mentioning SER 2018
+## search for up to 100,000 tweets mentioning ASLO 2018
 rt <- search_tweets(
   paste(ser, collapse = " OR "),
   n = 1e5, verbose = FALSE,
@@ -73,13 +72,16 @@ saveRDS(rt[, "status_id"], file.path("data", "search-ids.rds"))
 ```
 
 
-From there, it's easy to plot the number of tweets about SER over time.
+From there, it's easy to plot the number of tweets about ASLO over time.
 
 ```{r time_series, message=FALSE, warning=FALSE}
 library(tidyverse)
+library(colorblindr)
+library(magrittr)
+library(syuzhet)
 
 rt %>%
-  filter(created_at > "2018-06-10") %>%
+  filter(as.Date(created_at) > as.Date("2018-06-10")) %>%
   ts_plot("2 hours", color = "transparent") +
   geom_smooth(method = "loess", se = FALSE, span = .5,
   size = 1.5, colour = colorblindr::palette_OkabeIto[2]) +
@@ -90,7 +92,7 @@ rt %>%
     plot.title = element_text(size = rel(1.5), face = "bold"),
     plot.subtitle = element_text(size = rel(1.2)),
     plot.caption = element_text(colour = "#444444")) +
-  labs(title = "Frequency of tweets about SER 2018 over time",
+  labs(title = "Frequency of tweets about ASLO 2018 over time",
     subtitle = "Twitter status counts aggregated using two-hour intervals",
     caption = "\n\nSource: Data gathered via Twitter's standard `search/tweets` API using rtweet\n Code provided by Mike Kearney (@kearneymw)",
     x = NULL, y = NULL)
@@ -137,7 +139,7 @@ rt %>%
     scale_color_manual(values = c(Positive = "#0072B2", Negative = "#D55E00")) +
     scale_fill_manual(values = c(Positive = "#0072B2BB", Negative = "#D55E00BB")) +
     labs(x = NULL, y = NULL,
-    title = "Sentiment (valence) of SER 2018 tweets over time",
+    title = "Sentiment (valence) of ASLO 2018 tweets over time",
     subtitle = "Mean sentiment of tweets aggregated in one-hour intervals",
     caption = "\nSource: Data gathered using rtweet. Sentiment analysis done using syuzhet\n Code provided by Mike Kearney (@kearneymw)")
 
@@ -214,7 +216,7 @@ as_tbl_graph(g) %>%
   theme(plot.title = element_text(size = rel(1.5), face = "bold", margin = margin(3, 1, 10, 1)),
       plot.subtitle = element_text(size = rel(1.2)),
       plot.caption = element_text(colour = "#444444")) +
-  labs(title = "Connections between Twitter users during SER 2018",
+  labs(title = "Connections between Twitter users during ASLO 2018",
     caption = "\n\nSource: Data gathered via Twitter's standard `search/tweets` API using rtweet\n Code provided by Mike Kearney (@kearneymw)",
     x = NULL, y = NULL)
 
