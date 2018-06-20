@@ -69,6 +69,7 @@ saveRDS(rt, file.path("data", "search.rds"))
 ## save shareable data (only status_ids)
 saveRDS(rt[, "status_id"], file.path("data", "search-ids.rds"))
 
+# rt <- readRDS(file.path("data", "search.rds"))
 ```
 
 
@@ -157,6 +158,14 @@ unlist_df <- function(...) {
   dots <- lapply(list(...), unlist)
   tibble::as_tibble(dots)
 }
+
+## cleanup graph by removing rare screen_names
+common_screen_names <- group_by(rt, screen_name) %>% 
+  dplyr::summarise(n()) %>% 
+  dplyr::select(screen_name, count  = `n()`) %>%
+  dplyr::filter(count >= 7 | screen_name == "__jsta")
+
+rt <- dplyr::filter(rt, screen_name %in% common_screen_names$screen_name)  
 
 ## iterate by row
 row_dfs <- lapply(
