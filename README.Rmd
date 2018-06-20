@@ -124,7 +124,7 @@ rt %>%
   summarise(sentiment = mean(sentiment, na.rm = TRUE)) %>%
   mutate(valence = ifelse(sentiment > 0L, "Positive", "Negative")) %>%
   ggplot(aes(x = time, y = sentiment)) +
-  geom_smooth(method = "loess", span = .1,
+  geom_smooth(method = "loess", span = .5,
     colour = "#aa11aadd") +
   geom_point(aes(fill = valence, color = valence), 
     shape = 21, size = 3) +
